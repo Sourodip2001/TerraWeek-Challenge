@@ -225,7 +225,7 @@ resource "aws_s3_bucket" "demo" {
     prevent_destroy = false
   }
 
-  tags = merge(var.common_tags,{
+  tags = merge(var.common_tags, {
     Name = each.key
   })
 }
