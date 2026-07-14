@@ -305,4 +305,7 @@ Upcoming topics include:
 - DynamoDB Locking
 - Advanced AWS Infrastructure
 
+If you found this repository useful, consider giving it a Star!
+
+#TerraWeekChallenge #TrainWithShubham #Terraform #AWS #DevOps #InfrastructureAsCode #CloudComputing #OpenSource #LearningInPublic
 
