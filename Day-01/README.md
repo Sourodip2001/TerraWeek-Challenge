@@ -357,3 +357,4 @@ Today I learned
 - Terraform CLI
 - OpenTofu
 - Lock files
+#TerraWeekChallenge #TrainWithShubham #Terraform #AWS #DevOps #InfrastructureAsCode #CloudComputing #OpenSource #LearningInPublic
