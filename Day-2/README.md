@@ -1,65 +1,688 @@
-# 🚀 #TerraWeek Challenge | Day 02: HCL Deep Dive — Variables, Types & Expressions
+````markdown
+# 🚀 TerraWeek Challenge – Day 02
+## HCL Deep Dive: Variables, Types & Expressions
 
-Welcome to my implementation blueprint for **Day 02** of the `#TerraWeek Challenge`, hosted by Shubham Londhe and the TrainWithShubham community. Today's focus bridges foundational deployments into advanced, flexible, and production-grade **HashiCorp Configuration Language (HCL)** configurations.
+**Date:** Monday, 13th July 2026
 
 ---
 
-## 📚 Task 1: Master HCL Syntax
+# 📖 Introduction
 
-### 1. Anatomy of an HCL Block
-In HCL, infrastructure intent is written structurally via blocks. The standard layout follows this pattern:
+Day 2 of the TerraWeek Challenge focused on mastering **HashiCorp Configuration Language (HCL)**, the language used to write Terraform configurations.
+
+The objective was to understand how Terraform configurations become reusable, flexible, and maintainable using variables, expressions, locals, outputs, validation, and built-in functions.
+
+---
+
+# 🎯 Learning Objectives
+
+By completing Day 2, I learned:
+
+- Understand HCL syntax and structure
+- Differentiate between blocks and arguments
+- Work with Terraform expressions
+- Create and validate input variables
+- Use all major Terraform variable types
+- Implement locals and outputs
+- Explore Terraform built-in functions
+- Understand variable precedence
+- Practice using terraform console
+
+---
+
+# 📚 Task 1 – Understanding HCL Syntax
+
+## What is HCL?
+
+HashiCorp Configuration Language (HCL) is a human-readable language used to define infrastructure in Terraform.
+
+Example:
 
 ```hcl
-block_type "label_one" "label_two" {
+resource "local_file" "example" {
+  filename = "hello.txt"
+  content  = "Hello TerraWeek!"
+}
+```
+
+---
+
+## Anatomy of a Block
+
+General syntax
+
+```hcl
+block_type "label1" "label2" {
+
   argument = value
+
 }
-block_type: Represents the configuration stanza target (e.g., resource, variable, output, provider).Labels: Opaque identifiers specifying the block's exact variant type and its logical target name.Body ({...}): A scope containing attributes, arguments, and nested structural blocks.2. Difference Between an Argument and a BlockArgument: A configuration setting that assigns a specific value to an attribute name within a block scope (e.g., external = 8080). It represents a concrete key-value pair.Block: A structural structural container that can hold arguments, expressions, or nested sub-blocks (e.g., ports { ... }). Blocks define the operational framework or objects themselves.3. Expressions & Logic RealizationString Interpolation ("${...}"): Allows evaluation of variables or function calls within literal string outputs.Example: name = "${local.calculated_prefix}-nginx-web"References: Dot-notation paths used to resolve parameters from other workspace components dynamically.Example: image = docker_image.nginx_image.image_id tracks dependencies implicitly.🧩 Task 3: Core HCL Terminologies ExplainedProvider: A system translation plugin that exposes downstream platform APIs to Terraform Core engine hooks.Example: The kreuzwerker/docker provider maps HCL definitions directly into local Docker engine socket operations.Resource: A distinct architectural component or asset provisioned and monitored within the execution landscape.Example: An isolated Nginx container block deployed onto the targeted infrastructure daemon.State: A centralized source-of-truth metadata file (terraform.tfstate) tracking real-world asset statuses against workspace codebase configurations.Plan: A zero-impact dry-run execution blueprint illustrating expected addition, mutation, or deletion phases.HCL: HashiCorp Configuration Language; a declarative, human-readable domain-specific language customized for infrastructure automation.Module: A self-contained, structural directory grouping common resource specifications together to achieve architectural reuse.⚙️ Task 2 & 4: Variable Topology & Dynamic Engine WorkflowThis sandbox configurations utilizes Primitives, Collections, and Complex Structural objects to drive a local Docker image and container workspace seamlessly.Workspace Directory MapPlaintext.
-├── main.tf                 # Core execution expressions & local functions
-├── outputs.tf              # Post-execution status metrics delivery hooks
-├── terraform.tf            # Version control constraints & locked providers
-├── terraform.tfvars        # Default parameter variables layout definition
-└── variables.tf            # Structural input parameters definitions mapping
-💻 Live Interaction Verification Checklist1. Evaluation Sandbox (terraform console)Validated built-in HCL runtime functions to shape layout logic prior to writing resources:Plaintext$ terraform console
-> upper("terraweek")
+```
+
+Example
+
+```hcl
+resource "local_file" "example" {
+
+  filename = "hello.txt"
+
+  content = "Hello Terraform"
+}
+```
+
+- **Block Type** → resource
+- **Label 1** → local_file
+- **Label 2** → example
+
+---
+
+## Arguments
+
+Arguments assign values inside a block.
+
+Example
+
+```hcl
+filename = "hello.txt"
+```
+
+---
+
+## Blocks
+
+Blocks create infrastructure or define configurations.
+
+Example
+
+```hcl
+resource "local_file" "example" {
+
+}
+```
+
+---
+
+## Expressions
+
+### String Interpolation
+
+```hcl
+"${var.environment}-server"
+```
+
+---
+
+### Reference Expression
+
+```hcl
+var.container_name
+```
+
+---
+
+### Operators
+
+```hcl
+var.environment == "prod"
+```
+
+---
+
+# 📚 Task 2 – Variables, Types & Validation
+
+Terraform supports different variable types.
+
+---
+
+## String
+
+```hcl
+variable "container_name" {
+
+  type = string
+
+  default = "terraweek-nginx"
+}
+```
+
+---
+
+## Number
+
+```hcl
+variable "external_port" {
+
+  type = number
+
+  default = 8080
+}
+```
+
+---
+
+## Boolean
+
+```hcl
+variable "enable_logs" {
+
+  type = bool
+
+  default = true
+}
+```
+
+---
+
+## List
+
+```hcl
+variable "allowed_users" {
+
+  type = list(string)
+
+  default = [
+    "Alice",
+    "Bob",
+    "Charlie"
+  ]
+}
+```
+
+---
+
+## Map
+
+```hcl
+variable "common_tags" {
+
+  type = map(string)
+
+  default = {
+
+    Project = "TerraWeek"
+
+    Owner = "Sourodip"
+  }
+}
+```
+
+---
+
+## Set
+
+```hcl
+variable "regions" {
+
+  type = set(string)
+
+  default = [
+    "ap-south-1",
+    "us-east-1"
+  ]
+}
+```
+
+---
+
+## Object
+
+```hcl
+variable "vm_config" {
+
+  type = object({
+
+    cpu = number
+
+    memory = number
+
+    os = string
+
+  })
+
+  default = {
+
+    cpu = 2
+
+    memory = 2048
+
+    os = "Ubuntu"
+
+  }
+}
+```
+
+---
+
+## Tuple
+
+```hcl
+variable "server_tuple" {
+
+  type = tuple([
+    string,
+    number,
+    bool
+  ])
+
+  default = [
+    "nginx",
+    80,
+    true
+  ]
+}
+```
+
+---
+
+## Validation
+
+```hcl
+variable "environment" {
+
+  type = string
+
+  default = "dev"
+
+  validation {
+
+    condition = contains(
+      ["dev","staging","prod"],
+      var.environment
+    )
+
+    error_message = "Environment must be dev, staging or prod."
+  }
+}
+```
+
+---
+
+## Sensitive Variable
+
+```hcl
+variable "db_password" {
+
+  type = string
+
+  sensitive = true
+}
+```
+
+---
+
+# 📚 Task 3 – Locals
+
+Locals help avoid repeating values.
+
+Example
+
+```hcl
+locals {
+
+  name_prefix = upper("${var.environment}-terraweek")
+
+  instance_type = var.environment == "prod" ? "t3.medium" : "t3.micro"
+}
+```
+
+---
+
+# Outputs
+
+Outputs display useful information after deployment.
+
+```hcl
+output "environment" {
+
+  value = var.environment
+}
+
+output "instance_type" {
+
+  value = local.instance_type
+}
+```
+
+---
+
+# Terraform Built-in Functions
+
+## upper()
+
+```terraform
+upper("terraweek")
+```
+
+Output
+
+```
 "TERRAWEEK"
-> merge({a=1}, {b=2})
+```
+
+---
+
+## join()
+
+```terraform
+join("-", ["tws","terraform","2026"])
+```
+
+Output
+
+```
+tws-terraform-2026
+```
+
+---
+
+## merge()
+
+```terraform
+merge(
 {
-  "a" = 1
-  "b" = 2
+Project="Terraform"
+},
+{
+Owner="Sourodip"
 }
-> join("-", ["tws", "terraweek", "2026"])
-"tws-terraweek-2026"
-2. Workspace Initialization (terraform init)Bash$ terraform init
-Initializing the backend...
-Initializing provider plugins...
-- Finding kreuzwerker/docker versions matching "~> 3.0.0"...
-- Installing kreuzwerker/docker v3.0.1...
-- Installed kreuzwerker/docker v3.0.1 (signed by a HashiCorp partner)
+)
+```
 
-Terraform has been successfully initialized!
-3. Execution Schema Preview (terraform plan)Evaluating configuration parsing with explicit parameter passing variations:Bash$ terraform plan -var 'container_name=tws-web' -var 'external_port=8080'
-4. Applying Desired Configuration Changes (terraform apply)Executing the target runtime loop natively.Bash$ terraform apply -var 'container_name=tws-web' -var 'external_port=8080' --auto-approve
+Output
 
-docker_image.nginx_image: Creating...
-docker_image.nginx_image: Creation complete after 2s
-docker_container.web_server: Creating...
-docker_container.web_server: Creation complete after 1s
+```
+{
+Project = Terraform
+Owner = Sourodip
+}
+```
 
-Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+---
 
-Outputs:
-application_endpoint = "http://localhost:8080"
-container_id = "1a2b3c4d5e6f7g8h9i..."
-secured_credential_test = <sensitive>
-transformed_hosts = [
-  "HOST-NODE1",
-  "HOST-NODE2",
-]
-(Verify by curling or browsing to http://localhost:8080 to see the standard Nginx greeting page!)5. De-provisioning Assets (terraform destroy)Bash$ terraform destroy -var 'container_name=tws-web' -var 'external_port=8080' --auto-approve
-docker_container.web_server: Destroying...
-docker_container.web_server: Destruction complete after 1s
-docker_image.nginx_image: Destroying...
-docker_image.nginx_image: Destruction complete after 0s
+## lookup()
 
-Destroy complete! Resources: 2 destroyed.
-📊 Deep-Dive Discoveries & Variable Precedence1. Variable Precedence HierarchyDuring execution conflicts, Terraform resolves values via a strict top-down layout evaluation rule:$$\text{Highest Precedence } (\text{Wins}) \longrightarrow \text{ Lowest Precedence } (\text{Loses})$$-var and -var-file flags passed directly to the shell invocation line.*.auto.tfvars or *.auto.tfvars.json automated files.terraform.tfvars or terraform.tfvars.json properties sheets.TF_VAR_ environment variables exported within terminal runtimes.default attribute value declarations stated inside the schema definition blocks.2. The Dependency Lock File (.terraform.lock.hcl)The auto-generated dependency lock file acts as a critical security control mechanism for operations:Implements Precise Checksums (zh:): Prevents untrusted downstream upstream supply chain updates from breaking live production platforms.Enforces Multi-Workstation Determinism: Guarantees that separate engineering teammates or distributed automated CI/CD runners load identical provider binary hashes when pulling software components down during terraform init.
+```terraform
+lookup(
+{
+Name="Sourodip"
+},
+"Name"
+)
+```
+
+Output
+
+```
+Sourodip
+```
+
+---
+
+## length()
+
+```terraform
+length([
+"AWS",
+"Docker",
+"Terraform"
+])
+```
+
+Output
+
+```
+3
+```
+
+---
+
+## format()
+
+```terraform
+format("%s-%s","dev","nginx")
+```
+
+Output
+
+```
+dev-nginx
+```
+
+---
+
+# Terraform Console
+
+```bash
+terraform console
+```
+
+Examples
+
+```terraform
+upper("terraweek")
+
+join("-", ["Terraform","Day","02"])
+
+length(["AWS","Docker","Terraform"])
+
+lookup(
+{
+Name="Sourodip"
+},
+"Name"
+)
+```
+
+Exit console
+
+```terraform
+exit
+```
+
+---
+
+# 📚 Task 4 – Terraform Workflow
+
+Initialize Terraform
+
+```bash
+terraform init
+```
+
+Format code
+
+```bash
+terraform fmt
+```
+
+Validate
+
+```bash
+terraform validate
+```
+
+Preview
+
+```bash
+terraform plan
+```
+
+Apply
+
+```bash
+terraform apply
+```
+
+Display outputs
+
+```bash
+terraform output
+```
+
+Destroy resources
+
+```bash
+terraform destroy
+```
+
+---
+
+# Using terraform.tfvars
+
+Instead of passing variables using `-var`, Terraform automatically loads values from `terraform.tfvars`.
+
+Example
+
+```hcl
+container_name = "tws-web"
+
+external_port = 8080
+
+environment = "dev"
+```
+
+Run
+
+```bash
+terraform plan
+
+terraform apply
+```
+
+---
+
+# Variable Precedence
+
+Highest precedence wins.
+
+```
+-var / -var-file
+        ↓
+*.auto.tfvars
+        ↓
+terraform.tfvars
+        ↓
+TF_VAR_ Environment Variables
+        ↓
+Default Values
+```
+
+---
+
+# 🍫 Bonus Tasks
+
+## For Expression
+
+```hcl
+locals {
+
+  upper_users = [
+
+    for user in var.allowed_users :
+
+    upper(user)
+  ]
+}
+```
+
+---
+
+## Conditional Expression
+
+```hcl
+locals {
+
+  instance_type = var.environment == "prod" ? "t3.medium" : "t3.micro"
+}
+```
+
+---
+
+## Optional Object Attribute
+
+```hcl
+variable "employee" {
+
+  type = object({
+
+    name = string
+
+    age = number
+
+    designation = optional(
+      string,
+      "DevOps Engineer"
+    )
+  })
+
+  default = {
+
+    name = "Sourodip"
+
+    age = 25
+  }
+}
+```
+
+---
+
+# 📂 Project Structure
+
+```
+Day-02/
+│
+├── terraform.tf
+├── variables.tf
+├── main.tf
+├── locals.tf
+├── outputs.tf
+├── terraform.tfvars
+└── README.md
+```
+
+---
+
+# 📌 Key Takeaways
+
+- Learned the fundamentals of HCL.
+- Explored blocks, arguments, and expressions.
+- Implemented all major Terraform variable types.
+- Added variable validation and sensitive variables.
+- Used locals to simplify configurations.
+- Displayed useful outputs.
+- Practiced Terraform built-in functions.
+- Understood variable precedence.
+- Implemented for expressions and conditional expressions.
+- Explored optional object attributes.
+
+---
+
+# 🚀 Commands Used
+
+```bash
+terraform version
+
+terraform fmt
+
+terraform validate
+
+terraform init
+
+terraform console
+
+terraform plan
+
+terraform apply
+
+terraform output
+
+terraform destroy
+```
+
+---
+
+# 🎯 Outcome
+
+Successfully completed **TerraWeek Day 02**, gaining hands-on experience with **HashiCorp Configuration Language (HCL)**, Terraform variables, expressions, validation, locals, outputs, functions, and advanced language features. These concepts form the foundation for writing scalable, reusable, and production-ready Infrastructure as Code.
+````
+#TerraWeekChallenge #TrainWithShubham #Terraform #InfrastructureAsCode #IaC #DevOps #CloudComputing #AWS #Automation #OpenTofu #HashiCorp #GitHub #LearningInPublic #DevOpsJourney #CloudNative #Linux #TechCommunity
