@@ -1,19 +1,44 @@
-output "container_id" {
-  description = "The unique cryptographic identifier of the provisioned container"
-  value       = docker_container.web.id
-}
-
 output "container_name" {
-  description = "The system-calculated HCL runtime name of the active container"
-  value       = docker_container.web.name
+
+  value = docker_container.web.name
 }
 
-output "application_url" {
-  description = "Direct local ingress verification address"
-  value       = "http://localhost:8080"
+output "container_id" {
+
+  value = docker_container.web.id
 }
 
-output "transformed_names_preview" {
-  description = "Demonstration of the processed HCL 'for' expression loop output"
-  value       = local.transformed_names
+output "environment" {
+
+  value = var.environment
+}
+
+output "name_prefix" {
+
+  value = local.name_prefix
+}
+
+output "merged_tags" {
+
+  value = local.merged_tags
+}
+
+output "joined_users" {
+
+  value = local.joined_users
+}
+
+output "upper_users" {
+
+  value = local.upper_users
+}
+
+output "instance_type" {
+
+  value = local.instance_type
+}
+
+output "total_regions" {
+
+  value = local.total_regions
 }
