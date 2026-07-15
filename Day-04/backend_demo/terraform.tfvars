@@ -1,0 +1,1 @@
+bucket_name = "sourodip-demo-bucket-2026"

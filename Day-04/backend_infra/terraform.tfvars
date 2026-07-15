@@ -1,0 +1,1 @@
+bucket_name = "sourodip-terraweek-state-2026"
