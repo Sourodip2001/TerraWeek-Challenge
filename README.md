@@ -1,17 +1,18 @@
 # 🚀 TerraWeek Challenge 2026
 
-
-**A complete hands-on journey through Terraform and Infrastructure as Code (IaC)**
+> **A complete hands-on journey through Terraform and Infrastructure as Code (IaC)**
 
 Part of the **#TerraWeekChallenge** organized by **TrainWithShubham**
 
-
+---
 
 # 📖 About
 
-This repository documents my progress throughout the **TerraWeek Challenge**, where I'm learning Terraform from the ground up by building real-world Infrastructure as Code projects.
+Welcome to my **TerraWeek Challenge** repository!
 
-The challenge starts with Terraform fundamentals and gradually progresses toward production-ready cloud infrastructure using AWS.
+This repository documents my hands-on learning journey through **Terraform** and **Infrastructure as Code (IaC)**. Throughout this challenge, I explore Terraform concepts from the fundamentals to advanced production-ready cloud infrastructure on AWS.
+
+Each day contains practical examples, source code, notes, and documentation that reinforce real-world DevOps practices.
 
 ---
 
@@ -19,39 +20,39 @@ The challenge starts with Terraform fundamentals and gradually progresses toward
 
 - Terraform
 - AWS
-- EC2
-- VPC
+- Amazon EC2
+- Amazon S3
+- Amazon VPC
 - IAM
-- S3
-- Networking
-- Infrastructure as Code (IaC)
 - HCL (HashiCorp Configuration Language)
 - Git & GitHub
+- Linux
+- VS Code
 
 ---
 
 # 📂 Repository Structure
 
 ```
-TerraWeek/
+TerraWeek-Challenge/
 │
-├── day01/
+├── Day-01/
 │   ├── README.md
-│   ├── main.tf
 │   └── ...
 │
-├── day02/
+├── Day-02/
 │   ├── README.md
-│   ├── main.tf
 │   └── ...
 │
-├── day03/
+├── Day-03/
 │   ├── README.md
-│   └── example/
-│       ├── main.tf
-│       ├── variables.tf
-│       ├── outputs.tf
-│       └── terraform.tf
+│   └── ...
+│
+├── Day-04/
+│   ├── README.md
+│   ├── backend_infra/
+│   ├── backend_demo/
+│   └── ...
 │
 └── README.md
 ```
@@ -62,40 +63,36 @@ TerraWeek/
 
 | Day | Topic | Status |
 |------|-------|--------|
-| Day 01 | Introduction to Terraform & Infrastructure as Code | ✅ Completed |
-| Day 02 | HCL Deep Dive — Variables, Types & Expressions | ✅ Completed |
-| Day 03 | Providers, Resources & First Cloud Infrastructure | ✅ Completed |
+| ✅ Day 01 | Introduction to Infrastructure as Code & Terraform Basics | Completed |
+| ✅ Day 02 | HCL Deep Dive – Variables, Types & Expressions | Completed |
+| ✅ Day 03 | Providers, Resources & First Cloud Infrastructure | Completed |
+| ✅ Day 04 | Terraform State & Remote Backends (Native Locking) | Completed |
 
 ---
 
-# 📚 Day 01 — Introduction to Terraform
+# 📚 Day 01 – Introduction to Terraform
 
-📂 Folder: `day01/`
+### Topics Covered
 
-## Topics Covered
-
-- What is Infrastructure as Code (IaC)
+- Infrastructure as Code (IaC)
 - Why Terraform?
 - Terraform Architecture
-- Terraform Lifecycle
+- Terraform Workflow
+- Providers
+- Resources
+- State
+- HCL Basics
 - Terraform CLI
-- Terraform Installation
-- Provider Plugins
-- Terraform State
-- Terraform Plan
-- Terraform Apply
-- Terraform Destroy
 - Terraform Lock File
 
 ### Hands-on
 
 - Installed Terraform
-- Configured VS Code Extension
-- Created first Terraform project
+- Verified Installation
 - Used Local Provider
 - Used Random Provider
-- Generated local resources
-- Destroyed resources safely
+- Created Local Resources
+- Executed Complete Terraform Workflow
 
 ### Commands Practiced
 
@@ -110,11 +107,9 @@ terraform destroy
 
 ---
 
-# 📚 Day 02 — HCL Deep Dive
+# 📚 Day 02 – HCL Deep Dive
 
-📂 Folder: `day02/`
-
-## Topics Covered
+### Topics Covered
 
 - HCL Syntax
 - Blocks
@@ -124,22 +119,25 @@ terraform destroy
 - Primitive Types
 - Collection Types
 - Object Types
-- Functions
-- String Interpolation
+- Tuples
+- Sets
+- Maps
 - Outputs
+- Locals
 - Sensitive Variables
+- Variable Validation
 - Variable Precedence
-- Docker Provider
+- Terraform Functions
 
 ### Hands-on
 
-- Deployed Docker Container
-- Used Variables
-- Used terraform.tfvars
-- Used terraform console
-- Created Outputs
-- Tested Variable Precedence
-- Used Built-in Functions
+- Docker Provider
+- Variables & tfvars
+- Terraform Console
+- Built-in Functions
+- Conditional Expressions
+- For Expressions
+- Optional Object Attributes
 
 ### Commands Practiced
 
@@ -153,14 +151,12 @@ terraform destroy
 
 ---
 
-# 📚 Day 03 — Providers, Resources & First Cloud Infrastructure
+# 📚 Day 03 – Providers, Resources & AWS Infrastructure
 
-📂 Folder: `day03/`
-
-## Topics Covered
+### Topics Covered
 
 - AWS Provider
-- Version Pinning
+- Provider Version Constraints
 - Provider Alias
 - Resources
 - Data Sources
@@ -181,12 +177,10 @@ terraform destroy
 - Security Group
 - EC2 Instance
 - Elastic IP
-- S3 Buckets
+- S3 Bucket
 
-### Bonus Features
+### Bonus
 
-- Automatic Nginx Installation
-- Provider Alias
 - Dynamic Security Group Rules
 - Multiple EC2 Instances
 - Terraform Outputs
@@ -206,64 +200,120 @@ terraform destroy
 
 ---
 
-# 🎯 Terraform Concepts Learned So Far
+# 📚 Day 04 – Terraform State & Remote Backends
+
+### Topics Covered
+
+- Terraform State
+- terraform.tfstate
+- State Drift
+- Local State
+- Remote State
+- AWS S3 Backend
+- Native S3 State Locking
+- Terraform State Commands
+- Import Block
+- moved Block
+- removed Block
+- check Block
+
+### Hands-on
+
+- Created Versioned S3 Backend
+- Enabled Server-Side Encryption
+- Configured Remote Backend
+- Migrated Local State to S3
+- Used Native State Locking (`use_lockfile = true`)
+- Imported Existing AWS Resources
+- Practiced State Management Commands
+
+### Terraform State Commands
+
+```bash
+terraform state list
+terraform state show
+terraform state mv
+terraform state rm
+terraform show
+```
+
+### Bonus
+
+- Compared Remote Backends
+- Explored S3 Versioning
+- Used moved Block
+- Used removed Block
+- Used check Block
+
+---
+
+# 🎯 Terraform Concepts Learned
 
 ## Core Concepts
 
 - Infrastructure as Code
 - Declarative Infrastructure
-- Terraform Workflow
 - Providers
 - Resources
 - Data Sources
-- State Management
-- Outputs
 - Variables
+- Outputs
+- Locals
+- State Management
+- Terraform Workflow
+- Functions
 - Expressions
 - Modules
-- Functions
 
 ---
 
 ## Advanced Concepts
 
 - Version Constraints
-- Provider Aliases
+- Provider Alias
 - Dynamic Blocks
 - count
 - for_each
 - depends_on
 - lifecycle
+- Variable Validation
 - Variable Precedence
-- User Data
-- Dependency Graph
+- Import Block
+- moved Block
+- removed Block
+- check Block
+- Remote Backends
+- Native S3 State Locking
 
 ---
 
 # 🚀 Terraform Workflow
 
 ```text
-Write Code
-     │
-     ▼
+Write Configuration
+        │
+        ▼
 terraform init
-     │
-     ▼
+        │
+        ▼
 terraform fmt
-     │
-     ▼
+        │
+        ▼
 terraform validate
-     │
-     ▼
+        │
+        ▼
 terraform plan
-     │
-     ▼
+        │
+        ▼
 terraform apply
-     │
-     ▼
-Infrastructure Created
-     │
-     ▼
+        │
+        ▼
+Infrastructure Provisioned
+        │
+        ▼
+terraform output
+        │
+        ▼
 terraform destroy
 ```
 
@@ -271,13 +321,16 @@ terraform destroy
 
 # 📸 Screenshots
 
-Each day's folder contains screenshots including:
+Each day's folder includes screenshots demonstrating:
 
 - Terraform Init
+- Terraform Validate
 - Terraform Plan
 - Terraform Apply
+- Terraform Output
+- Terraform State Commands
 - AWS Console
-- Terraform Outputs
+- Remote Backend
 - Terraform Destroy
 
 ---
@@ -285,27 +338,38 @@ Each day's folder contains screenshots including:
 # 📖 Learning Resources
 
 - Terraform Documentation
-- AWS Documentation
-- Terraform Registry
 - HashiCorp Learn
+- Terraform Registry
+- AWS Documentation
 - TrainWithShubham TerraWeek Challenge
 
 ---
 
-# 🎯 What's Next?
-
-Upcoming topics include:
+# 🎯 Upcoming Topics
 
 - Terraform Modules
-- Remote State
-- Backend Configuration
+- Remote Modules
 - Workspaces
-- IAM
-- S3 Backend
-- DynamoDB Locking
-- Advanced AWS Infrastructure
+- Provisioners
+- Meta Arguments
+- Advanced Networking
+- IAM Best Practices
+- Multi-Environment Deployments
+- CI/CD with Terraform
+- Production Infrastructure
 
-If you found this repository useful, consider giving it a Star!
+---
 
-#TerraWeekChallenge #TrainWithShubham #Terraform #AWS #DevOps #InfrastructureAsCode #CloudComputing #OpenSource #LearningInPublic
+# 🤝 Connect With Me
 
+If you're also participating in **#TerraWeekChallenge**, let's connect and learn together!
+
+If you found this repository helpful, consider ⭐ **starring** it.
+
+Happy Terraforming! 🚀🌍
+
+---
+
+# 📌 Tags
+
+**#TerraWeekChallenge #TrainWithShubham #Terraform #AWS #DevOps #InfrastructureAsCode #IaC #CloudComputing #Automation #HashiCorp #CloudNative #Linux #GitHub #LearningInPublic**
