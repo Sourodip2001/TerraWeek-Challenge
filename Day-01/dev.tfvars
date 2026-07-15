@@ -1,2 +1,0 @@
-bucketname = "souroiptwschallenge"
-
