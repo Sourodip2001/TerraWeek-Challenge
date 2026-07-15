@@ -1,85 +1,108 @@
-# --- Primitives ---
-variable "environment" {
-  description = "Deployment environment lifecycle stage"
+variable "container_name" {
+  description = "Container Name"
   type        = string
-  default     = "dev"
-
-  validation {
-    condition     = contains(["dev", "staging", "prod"], var.environment)
-    error_message = "The environment variable must be strictly one of: dev, staging, prod."
-  }
+  default     = "terraweek-nginx"
 }
 
-variable "container_count" {
-  description = "Number of active instances to spin up"
-  type        = number
-  default     = 1
+variable "external_port" {
+  description = "External Port"
+
+  type = number
+
+  default = 8080
+
+  validation {
+    condition     = var.external_port >= 1024 && var.external_port <= 65535
+    error_message = "Port must be between 1024 and 65535."
+  }
 }
 
 variable "enable_logs" {
-  description = "Toggle flag for stdout container logging streams"
-  type        = bool
-  default     = true
+  type    = bool
+  default = true
 }
 
-# --- Collections ---
-variable "container_names" {
-  description = "List of naming seeds for deployment targeting"
-  type        = list(string)
-  default     = ["nginx-frontend", "nginx-proxy"]
+variable "allowed_users" {
+  type = list(string)
+
+  default = [
+    "alice",
+    "bob",
+    "charlie"
+  ]
 }
 
-variable "container_labels" {
-  description = "Key-value metadata mapping for container filtering"
-  type        = map(string)
+variable "common_tags" {
+  type = map(string)
+
   default = {
-    Project   = "TerraWeek"
-    ManagedBy = "Terraform"
+    Project = "TerraWeek"
+    Owner   = "Sourodip"
   }
 }
 
-variable "unique_ports" {
-  description = "Set of unique internal port configurations"
-  type        = set(string)
-  default     = ["80", "443"]
+variable "regions" {
+  type = set(string)
+
+  default = [
+    "us-east-1",
+    "ap-south-1",
+    "eu-west-1"
+  ]
 }
 
-# --- Structural ---
-variable "docker_settings" {
-  description = "Complex structural representation of container specifications"
+variable "vm_config" {
   type = object({
-    image_name   = string
-    restart_policy = string
-    timeout      = number
+    cpu    = number
+    memory = number
+    os     = string
   })
+
   default = {
-    image_name   = "nginx:latest"
-    restart_policy = "always"
-    timeout      = 30
+    cpu    = 2
+    memory = 2048
+    os     = "Ubuntu"
   }
 }
 
-variable "network_tuple" {
-  description = "Fixed-element sequence representing network configs"
-  type        = tuple([string, number, bool])
-  default     = ["bridge", 1500, true]
+variable "server_tuple" {
+  type = tuple([
+    string,
+    number,
+    bool
+  ])
+
+  default = [
+    "nginx",
+    80,
+    true
+  ]
 }
 
-# --- Sensitive & Dynamic Defaults ---
-variable "db_secret_token" {
-  description = "Sensitive access payload token example"
-  type        = string
-  sensitive   = true
-  default     = "SuperSecureTWS2026Token"
+variable "environment" {
+
+  type    = string
+  default = "dev"
+
+  validation {
+
+    condition = contains(
+      [
+        "dev",
+        "staging",
+        "prod"
+      ],
+      var.environment
+    )
+
+    error_message = "Environment must be dev, staging or prod."
+  }
 }
 
-# --- Bonus Point: Optional Attributes inside Object ---
-variable "advanced_config" {
-  description = "Complex structural config leveraging optional parameters"
-  type = object({
-    cpu_shares = optional(number, 1024)
-    memory_mb  = optional(number, 512)
-    privileged = optional(bool, false)
-  })
-  default = {}
+variable "db_password" {
+
+  type      = string
+  sensitive = true
+
+  default = "Password@123"
 }
