@@ -106,3 +106,21 @@ variable "db_password" {
 
   default = "Password@123"
 }
+variable "employee" {
+
+  type = object({
+
+    name = string
+
+    age = number
+
+    designation = optional(string, "DevOps Engineer")
+  })
+
+  default = {
+
+    name = "Sourodip"
+
+    age = 25
+  }
+}
