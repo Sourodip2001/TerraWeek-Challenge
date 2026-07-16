@@ -10,9 +10,9 @@ Part of the **#TerraWeekChallenge** organized by **TrainWithShubham**
 
 Welcome to my **TerraWeek Challenge** repository!
 
-This repository documents my hands-on learning journey through **Terraform** and **Infrastructure as Code (IaC)**. Throughout this challenge, I explore Terraform concepts from the fundamentals to advanced production-ready cloud infrastructure on AWS.
+This repository documents my hands-on learning journey through **Terraform** and **Infrastructure as Code (IaC)**. Throughout this challenge, I explore Terraform concepts from the fundamentals to advanced production-ready AWS infrastructure by building real-world projects.
 
-Each day contains practical examples, source code, notes, and documentation that reinforce real-world DevOps practices.
+Each day contains practical implementations, Terraform configurations, documentation, and screenshots that reinforce industry-standard DevOps practices.
 
 ---
 
@@ -21,8 +21,8 @@ Each day contains practical examples, source code, notes, and documentation that
 - Terraform
 - AWS
 - Amazon EC2
-- Amazon S3
 - Amazon VPC
+- Amazon S3
 - IAM
 - HCL (HashiCorp Configuration Language)
 - Git & GitHub
@@ -33,7 +33,7 @@ Each day contains practical examples, source code, notes, and documentation that
 
 # 📂 Repository Structure
 
-```
+```text
 TerraWeek-Challenge/
 │
 ├── Day-01/
@@ -50,8 +50,18 @@ TerraWeek-Challenge/
 │
 ├── Day-04/
 │   ├── README.md
-│   ├── backend_infra/
 │   ├── backend_demo/
+│   ├── backend_infra/
+│   └── ...
+│
+├── Day-05/
+│   ├── README.md
+│   ├── example/
+│   │   ├── modules/
+│   │   │   └── ec2_instance/
+│   │   ├── main.tf
+│   │   ├── outputs.tf
+│   │   └── terraform.tf
 │   └── ...
 │
 └── README.md
@@ -67,6 +77,7 @@ TerraWeek-Challenge/
 | ✅ Day 02 | HCL Deep Dive – Variables, Types & Expressions | Completed |
 | ✅ Day 03 | Providers, Resources & First Cloud Infrastructure | Completed |
 | ✅ Day 04 | Terraform State & Remote Backends (Native Locking) | Completed |
+| ✅ Day 05 | Terraform Modules – Reusable & Composable Infrastructure | Completed |
 
 ---
 
@@ -75,7 +86,7 @@ TerraWeek-Challenge/
 ### Topics Covered
 
 - Infrastructure as Code (IaC)
-- Why Terraform?
+- Why Terraform
 - Terraform Architecture
 - Terraform Workflow
 - Providers
@@ -88,10 +99,10 @@ TerraWeek-Challenge/
 ### Hands-on
 
 - Installed Terraform
-- Verified Installation
+- Configured VS Code Extension
+- Created First Terraform Project
 - Used Local Provider
 - Used Random Provider
-- Created Local Resources
 - Executed Complete Terraform Workflow
 
 ### Commands Practiced
@@ -112,16 +123,12 @@ terraform destroy
 ### Topics Covered
 
 - HCL Syntax
-- Blocks
-- Arguments
+- Blocks & Arguments
 - Expressions
 - Variables
 - Primitive Types
 - Collection Types
-- Object Types
-- Tuples
-- Sets
-- Maps
+- Object & Tuple Types
 - Outputs
 - Locals
 - Sensitive Variables
@@ -132,7 +139,7 @@ terraform destroy
 ### Hands-on
 
 - Docker Provider
-- Variables & tfvars
+- Variables & terraform.tfvars
 - Terraform Console
 - Built-in Functions
 - Conditional Expressions
@@ -211,23 +218,21 @@ terraform destroy
 - Remote State
 - AWS S3 Backend
 - Native S3 State Locking
-- Terraform State Commands
-- Import Block
-- moved Block
-- removed Block
-- check Block
+- Import Blocks
+- moved Blocks
+- removed Blocks
+- check Blocks
 
 ### Hands-on
 
 - Created Versioned S3 Backend
 - Enabled Server-Side Encryption
-- Configured Remote Backend
-- Migrated Local State to S3
-- Used Native State Locking (`use_lockfile = true`)
-- Imported Existing AWS Resources
-- Practiced State Management Commands
+- Migrated Local State to Remote Backend
+- Configured Native State Locking (`use_lockfile = true`)
+- Imported Existing Resources
+- Practiced Terraform State Commands
 
-### Terraform State Commands
+### Commands Practiced
 
 ```bash
 terraform state list
@@ -235,15 +240,76 @@ terraform state show
 terraform state mv
 terraform state rm
 terraform show
+terraform init -migrate-state
 ```
 
 ### Bonus
 
-- Compared Remote Backends
-- Explored S3 Versioning
-- Used moved Block
-- Used removed Block
-- Used check Block
+- Compared Multiple Remote Backends
+- Explored S3 Bucket Versioning
+- Used moved Blocks
+- Used removed Blocks
+- Used check Blocks
+
+---
+
+# 📚 Day 05 – Terraform Modules
+
+### Topics Covered
+
+- Root Module vs Child Module
+- Local Modules
+- Module Inputs & Outputs
+- Module Composition
+- Module Versioning
+- Registry Modules
+- Git Modules
+- for_each with Modules
+- Version Constraints
+
+### Hands-on
+
+- Created a reusable EC2 module
+- Passed variables from the root module
+- Exposed module outputs
+- Used `for_each` to deploy multiple EC2 instances
+- Consumed the official AWS VPC module from the Terraform Registry
+- Published a reusable EC2 module to GitHub
+- Created and pushed the **v1.0.0** release tag
+- Learned Git-based module versioning using tags
+
+### Module Features
+
+- Input Variables
+- Variable Validation
+- Outputs
+- Consistent Tagging
+- Reusable Design
+- README Documentation
+- Git Versioning
+
+### Commands Practiced
+
+```bash
+terraform init
+terraform validate
+terraform plan
+terraform apply
+terraform output
+terraform destroy
+
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+### Bonus
+
+- Added README.md for the reusable module
+- Implemented Input Validation
+- Published Module to GitHub
+- Versioned Module using Git Tags
+- Explored Module Composition
+- Passed Outputs between Modules
 
 ---
 
@@ -255,35 +321,39 @@ terraform show
 - Declarative Infrastructure
 - Providers
 - Resources
-- Data Sources
 - Variables
 - Outputs
 - Locals
+- Expressions
+- Functions
+- Data Sources
+- Modules
 - State Management
 - Terraform Workflow
-- Functions
-- Expressions
-- Modules
 
 ---
 
 ## Advanced Concepts
 
+- Provider Aliases
 - Version Constraints
-- Provider Alias
+- Variable Validation
 - Dynamic Blocks
 - count
 - for_each
 - depends_on
 - lifecycle
-- Variable Validation
-- Variable Precedence
-- Import Block
-- moved Block
-- removed Block
-- check Block
-- Remote Backends
-- Native S3 State Locking
+- Remote State
+- Native S3 Locking
+- Import Blocks
+- moved Blocks
+- removed Blocks
+- check Blocks
+- Local Modules
+- Registry Modules
+- Git Modules
+- Module Versioning
+- Module Composition
 
 ---
 
@@ -330,7 +400,9 @@ Each day's folder includes screenshots demonstrating:
 - Terraform Output
 - Terraform State Commands
 - AWS Console
-- Remote Backend
+- Remote Backend Configuration
+- Module Structure
+- Multi-Instance Deployment
 - Terraform Destroy
 
 ---
@@ -338,8 +410,8 @@ Each day's folder includes screenshots demonstrating:
 # 📖 Learning Resources
 
 - Terraform Documentation
-- HashiCorp Learn
 - Terraform Registry
+- HashiCorp Learn
 - AWS Documentation
 - TrainWithShubham TerraWeek Challenge
 
@@ -347,24 +419,35 @@ Each day's folder includes screenshots demonstrating:
 
 # 🎯 Upcoming Topics
 
-- Terraform Modules
-- Remote Modules
-- Workspaces
+- Terraform Workspaces
 - Provisioners
 - Meta Arguments
-- Advanced Networking
-- IAM Best Practices
-- Multi-Environment Deployments
+- Dynamic Blocks
+- Terraform Testing
+- Multi-Environment Infrastructure
 - CI/CD with Terraform
 - Production Infrastructure
+- Terraform Best Practices
+- Advanced AWS Architectures
+
+---
+
+# 🌟 Featured Module
+
+As part of **Day 05**, I built and published a reusable Terraform EC2 module with versioning.
+
+**Repository:**  
+👉 https://github.com/Sourodip2001/terraform-aws-ec2-module
+
+**Latest Version:** `v1.0.0`
 
 ---
 
 # 🤝 Connect With Me
 
-If you're also participating in **#TerraWeekChallenge**, let's connect and learn together!
+If you're also participating in the **#TerraWeekChallenge**, let's connect and learn together!
 
-If you found this repository helpful, consider ⭐ **starring** it.
+If you found this repository helpful, consider giving it a ⭐.
 
 Happy Terraforming! 🚀🌍
 
