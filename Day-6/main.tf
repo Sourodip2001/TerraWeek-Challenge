@@ -67,7 +67,10 @@ ephemeral "random_password" "db_secret" {
 resource "aws_db_instance" "secure_database" {
   allocated_storage   = 20
   engine              = "postgres"
-  engine_version      = "16.1"
+  
+  # 🔄 FIXED: Upgraded from deprecated 16.1 to active minor version 16.14
+  engine_version      = "16.14" 
+  
   instance_class      = "db.t3.micro"
   username            = "db_admin"
   db_name             = "capstone_${local.env_context}"
