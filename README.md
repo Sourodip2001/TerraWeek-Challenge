@@ -10,9 +10,30 @@ Part of the **#TerraWeekChallenge** organized by **TrainWithShubham**
 
 Welcome to my **TerraWeek Challenge** repository!
 
-This repository documents my hands-on learning journey through **Terraform** and **Infrastructure as Code (IaC)**. Throughout this challenge, I explore Terraform concepts from the fundamentals to advanced production-ready AWS infrastructure by building real-world projects.
+This repository showcases my complete hands-on journey of learning **Terraform** and **Infrastructure as Code (IaC)** through the **7-Day TerraWeek Challenge**.
 
-Each day contains practical implementations, Terraform configurations, documentation, and screenshots that reinforce industry-standard DevOps practices.
+Starting from Terraform fundamentals, I gradually progressed to building production-inspired AWS infrastructure using modern DevOps practices. Throughout the challenge, I explored everything from writing basic Terraform configurations to designing reusable modules, managing remote state, implementing CI/CD pipelines, testing infrastructure, and building a complete capstone project.
+
+Over the course of this challenge, I learned and implemented:
+
+- Infrastructure as Code (IaC)
+- Terraform Fundamentals
+- HashiCorp Configuration Language (HCL)
+- AWS Infrastructure Provisioning
+- Terraform State Management
+- Remote Backends with Native S3 Locking
+- Reusable Terraform Modules
+- Module Versioning & Git Modules
+- Terraform Workspaces
+- Multi-Environment Deployments
+- Native Terraform Testing
+- Security Scanning with Trivy
+- GitHub Actions CI/CD
+- Production Best Practices
+- A Complete Terraform Capstone Project
+- Challenge Submission & Portfolio Preparation
+
+Each day's folder contains Terraform configurations, documentation, screenshots, and hands-on implementations following real-world DevOps workflows and Infrastructure as Code best practices.
 
 ---
 
@@ -26,6 +47,9 @@ Each day contains practical implementations, Terraform configurations, documenta
 - IAM
 - HCL (HashiCorp Configuration Language)
 - Git & GitHub
+- GitHub Actions
+- Terraform Test Framework
+- Trivy
 - Linux
 - VS Code
 
@@ -37,32 +61,34 @@ Each day contains practical implementations, Terraform configurations, documenta
 TerraWeek-Challenge/
 │
 ├── Day-01/
-│   ├── README.md
-│   └── ...
+│   └── README.md
 │
 ├── Day-02/
-│   ├── README.md
-│   └── ...
+│   └── README.md
 │
 ├── Day-03/
-│   ├── README.md
-│   └── ...
+│   └── README.md
 │
 ├── Day-04/
-│   ├── README.md
 │   ├── backend_demo/
 │   ├── backend_infra/
-│   └── ...
+│   └── README.md
 │
 ├── Day-05/
-│   ├── README.md
 │   ├── example/
-│   │   ├── modules/
-│   │   │   └── ec2_instance/
-│   │   ├── main.tf
-│   │   ├── outputs.tf
-│   │   └── terraform.tf
+│   │   └── modules/
+│   │       └── ec2_instance/
+│   └── README.md
+│
+├── Day-06/
+│   ├── modules/
+│   ├── tests/
+│   ├── .github/
+│   ├── README.md
 │   └── ...
+│
+├── Day-07/
+│   └── README.md
 │
 └── README.md
 ```
@@ -72,49 +98,36 @@ TerraWeek-Challenge/
 # 📅 Challenge Progress
 
 | Day | Topic | Status |
-|------|-------|--------|
+|------|------------------------------------------------------|------------|
 | ✅ Day 01 | Introduction to Infrastructure as Code & Terraform Basics | Completed |
 | ✅ Day 02 | HCL Deep Dive – Variables, Types & Expressions | Completed |
-| ✅ Day 03 | Providers, Resources & First Cloud Infrastructure | Completed |
-| ✅ Day 04 | Terraform State & Remote Backends (Native Locking) | Completed |
+| ✅ Day 03 | Providers, Resources & First AWS Infrastructure | Completed |
+| ✅ Day 04 | Terraform State & Remote Backends (Native S3 Locking) | Completed |
 | ✅ Day 05 | Terraform Modules – Reusable & Composable Infrastructure | Completed |
+| ✅ Day 06 | Advanced Terraform + Capstone Project | Completed |
+| ✅ Day 07 | Challenge Completion & Submission | Completed |
 
 ---
 
-# 📚 Day 01 – Introduction to Terraform
+# 📚 Day 01 – Terraform Fundamentals
 
 ### Topics Covered
 
 - Infrastructure as Code (IaC)
-- Why Terraform
-- Terraform Architecture
 - Terraform Workflow
 - Providers
 - Resources
-- State
-- HCL Basics
+- State Management
 - Terraform CLI
-- Terraform Lock File
+- Lock File
 
 ### Hands-on
 
 - Installed Terraform
-- Configured VS Code Extension
-- Created First Terraform Project
-- Used Local Provider
+- Configured Local Provider
 - Used Random Provider
+- Created First Terraform Project
 - Executed Complete Terraform Workflow
-
-### Commands Practiced
-
-```bash
-terraform init
-terraform fmt
-terraform validate
-terraform plan
-terraform apply
-terraform destroy
-```
 
 ---
 
@@ -122,88 +135,49 @@ terraform destroy
 
 ### Topics Covered
 
-- HCL Syntax
-- Blocks & Arguments
-- Expressions
 - Variables
-- Primitive Types
-- Collection Types
-- Object & Tuple Types
 - Outputs
 - Locals
-- Sensitive Variables
+- Expressions
+- Functions
 - Variable Validation
+- Sensitive Variables
 - Variable Precedence
-- Terraform Functions
 
 ### Hands-on
 
 - Docker Provider
-- Variables & terraform.tfvars
+- terraform.tfvars
 - Terraform Console
-- Built-in Functions
 - Conditional Expressions
 - For Expressions
-- Optional Object Attributes
-
-### Commands Practiced
-
-```bash
-terraform console
-terraform plan
-terraform apply
-terraform output
-terraform destroy
-```
+- Built-in Functions
 
 ---
 
-# 📚 Day 03 – Providers, Resources & AWS Infrastructure
+# 📚 Day 03 – AWS Infrastructure
 
 ### Topics Covered
 
 - AWS Provider
-- Provider Version Constraints
-- Provider Alias
 - Resources
 - Data Sources
 - count
 - for_each
-- depends_on
 - lifecycle
-- User Data
+- depends_on
 - Elastic IP
 
-### Infrastructure Created
+### Infrastructure Provisioned
 
 - VPC
 - Public Subnet
-- Internet Gateway
 - Route Table
-- Route Table Association
-- Security Group
+- Internet Gateway
+- Security Groups
 - EC2 Instance
 - Elastic IP
 - S3 Bucket
-
-### Bonus
-
-- Dynamic Security Group Rules
-- Multiple EC2 Instances
-- Terraform Outputs
-- Dependency Graph
-
-### Commands Practiced
-
-```bash
-terraform init
-terraform validate
-terraform plan
-terraform apply
-terraform state list
-terraform graph
-terraform destroy
-```
 
 ---
 
@@ -212,44 +186,23 @@ terraform destroy
 ### Topics Covered
 
 - Terraform State
-- terraform.tfstate
-- State Drift
 - Local State
 - Remote State
-- AWS S3 Backend
-- Native S3 State Locking
-- Import Blocks
-- moved Blocks
-- removed Blocks
-- check Blocks
+- State Drift
+- State Commands
+- Import Block
+- moved Block
+- removed Block
+- check Block
 
 ### Hands-on
 
-- Created Versioned S3 Backend
-- Enabled Server-Side Encryption
-- Migrated Local State to Remote Backend
-- Configured Native State Locking (`use_lockfile = true`)
+- Configured S3 Remote Backend
+- Enabled Bucket Versioning
+- Enabled Native S3 Locking
+- Migrated Local State
 - Imported Existing Resources
 - Practiced Terraform State Commands
-
-### Commands Practiced
-
-```bash
-terraform state list
-terraform state show
-terraform state mv
-terraform state rm
-terraform show
-terraform init -migrate-state
-```
-
-### Bonus
-
-- Compared Multiple Remote Backends
-- Explored S3 Bucket Versioning
-- Used moved Blocks
-- Used removed Blocks
-- Used check Blocks
 
 ---
 
@@ -257,59 +210,92 @@ terraform init -migrate-state
 
 ### Topics Covered
 
-- Root Module vs Child Module
+- Root Module
+- Child Module
 - Local Modules
-- Module Inputs & Outputs
-- Module Composition
-- Module Versioning
 - Registry Modules
 - Git Modules
-- for_each with Modules
-- Version Constraints
+- Module Inputs & Outputs
+- Version Pinning
+- Module Composition
 
 ### Hands-on
 
-- Created a reusable EC2 module
-- Passed variables from the root module
-- Exposed module outputs
-- Used `for_each` to deploy multiple EC2 instances
-- Consumed the official AWS VPC module from the Terraform Registry
-- Published a reusable EC2 module to GitHub
-- Created and pushed the **v1.0.0** release tag
-- Learned Git-based module versioning using tags
+- Built reusable EC2 module
+- Published module to GitHub
+- Added Module README
+- Implemented Variable Validation
+- Created Git Tag (`v1.0.0`)
+- Used Registry Module
+- Used `for_each` with Modules
 
-### Module Features
+### Published Module
 
-- Input Variables
-- Variable Validation
-- Outputs
-- Consistent Tagging
-- Reusable Design
-- README Documentation
-- Git Versioning
+**Repository**
 
-### Commands Practiced
+👉 https://github.com/Sourodip2001/terraform-aws-ec2-module
 
-```bash
-terraform init
-terraform validate
-terraform plan
-terraform apply
-terraform output
-terraform destroy
+**Latest Release**
 
-git tag v1.0.0
-git push origin v1.0.0
-```
+`v1.0.0`
 
-### Bonus
+---
 
-- Added README.md for the reusable module
-- Implemented Input Validation
-- Published Module to GitHub
-- Versioned Module using Git Tags
-- Explored Module Composition
-- Passed Outputs between Modules
+# 📚 Day 06 – Advanced Terraform & Capstone Project
+
+### Topics Covered
+
+- Terraform Workspaces
+- terraform test
+- GitHub Actions
+- CI/CD Pipeline
+- Trivy Security Scan
+- Terraform Best Practices
+- Multi-Environment Deployments
+
+### Capstone Project
+
+Implemented a production-inspired Terraform project featuring:
+
+- Custom EC2 Module
+- Official AWS VPC Registry Module
+- Remote S3 Backend
+- Native State Locking
+- Workspaces
+- GitHub Actions CI/CD
+- Terraform Test Framework
+- Trivy Security Scan
+- Version-Pinned Providers
+- Version-Pinned Modules
+- Production Folder Structure
+
+---
+
+# 📚 Day 07 – Challenge Completion & Submission
+
+### Activities Completed
+
+- Reviewed all seven days of Terraform learning
+- Verified repository organization
+- Updated project documentation
+- Confirmed all Terraform code and examples
+- Added Capstone documentation
+- Verified GitHub module publication
+- Ensured `.tfstate` and sensitive files were excluded from Git
+- Destroyed deployed infrastructure to avoid unnecessary AWS charges
+- Prepared LinkedIn posts and challenge submission
+- Submitted the completed TerraWeek Challenge
+
+### Final Deliverables
+
+- Complete GitHub Repository
+- Daily Documentation
+- Capstone Project
+- Published Terraform Module
+- Architecture Diagrams
+- Screenshots
+- LinkedIn Learning Posts
+- Challenge Submission
 
 ---
 
@@ -318,141 +304,119 @@ git push origin v1.0.0
 ## Core Concepts
 
 - Infrastructure as Code
-- Declarative Infrastructure
+- Terraform Workflow
 - Providers
 - Resources
 - Variables
 - Outputs
 - Locals
-- Expressions
 - Functions
+- Expressions
 - Data Sources
 - Modules
 - State Management
-- Terraform Workflow
 
 ---
 
 ## Advanced Concepts
 
+- Provider Version Constraints
 - Provider Aliases
-- Version Constraints
-- Variable Validation
 - Dynamic Blocks
 - count
 - for_each
-- depends_on
 - lifecycle
-- Remote State
+- Remote Backends
 - Native S3 Locking
 - Import Blocks
 - moved Blocks
 - removed Blocks
 - check Blocks
-- Local Modules
 - Registry Modules
 - Git Modules
 - Module Versioning
-- Module Composition
+- Workspaces
+- Terraform Testing
+- GitHub Actions
+- Security Scanning
+- CI/CD Best Practices
 
 ---
 
-# 🚀 Terraform Workflow
+# 🚀 Capstone Project
 
-```text
-Write Configuration
-        │
-        ▼
-terraform init
-        │
-        ▼
-terraform fmt
-        │
-        ▼
-terraform validate
-        │
-        ▼
-terraform plan
-        │
-        ▼
-terraform apply
-        │
-        ▼
-Infrastructure Provisioned
-        │
-        ▼
-terraform output
-        │
-        ▼
-terraform destroy
-```
+The final project combines everything learned throughout TerraWeek into a production-inspired AWS infrastructure.
+
+### Features
+
+- Custom Terraform Module
+- Official AWS Registry Module
+- Remote Backend
+- Native S3 Locking
+- Multi-Environment Workspaces
+- Terraform Test Framework
+- GitHub Actions Pipeline
+- Trivy Security Scan
+- Version Pinning
+- Production Folder Structure
 
 ---
 
-# 📸 Screenshots
+# 📸 Repository Highlights
 
-Each day's folder includes screenshots demonstrating:
+This repository contains:
 
-- Terraform Init
-- Terraform Validate
-- Terraform Plan
-- Terraform Apply
-- Terraform Output
-- Terraform State Commands
-- AWS Console
-- Remote Backend Configuration
-- Module Structure
-- Multi-Instance Deployment
-- Terraform Destroy
+- Terraform Configurations
+- AWS Infrastructure Examples
+- Module Development
+- Terraform Testing
+- GitHub Actions Workflow
+- Trivy Security Reports
+- Architecture Diagrams
+- Screenshots
+- Capstone Project
+- Daily Documentation
 
 ---
 
 # 📖 Learning Resources
 
 - Terraform Documentation
-- Terraform Registry
 - HashiCorp Learn
+- Terraform Registry
 - AWS Documentation
 - TrainWithShubham TerraWeek Challenge
 
 ---
 
-# 🎯 Upcoming Topics
+# 🎯 Key Takeaways
 
-- Terraform Workspaces
-- Provisioners
-- Meta Arguments
-- Dynamic Blocks
+Through this challenge, I gained practical experience with:
+
+- Infrastructure as Code (IaC)
+- AWS Infrastructure Automation
+- Reusable Terraform Modules
+- Remote State Management
+- Production Best Practices
+- CI/CD Automation
 - Terraform Testing
+- Security Scanning
 - Multi-Environment Infrastructure
-- CI/CD with Terraform
-- Production Infrastructure
-- Terraform Best Practices
-- Advanced AWS Architectures
+- Cloud Infrastructure Design
 
----
-
-# 🌟 Featured Module
-
-As part of **Day 05**, I built and published a reusable Terraform EC2 module with versioning.
-
-**Repository:**  
-👉 https://github.com/Sourodip2001/terraform-aws-ec2-module
-
-**Latest Version:** `v1.0.0`
+This repository represents my continuous journey toward becoming a skilled **DevOps & Cloud Engineer** by applying modern Infrastructure as Code practices.
 
 ---
 
 # 🤝 Connect With Me
 
-If you're also participating in the **#TerraWeekChallenge**, let's connect and learn together!
+If you're also participating in **#TerraWeekChallenge**, let's connect, collaborate, and continue learning together.
 
-If you found this repository helpful, consider giving it a ⭐.
+If you found this repository useful, consider giving it a ⭐.
 
 Happy Terraforming! 🚀🌍
 
 ---
 
-# 📌 Tags
 
-**#TerraWeekChallenge #TrainWithShubham #Terraform #AWS #DevOps #InfrastructureAsCode #IaC #CloudComputing #Automation #HashiCorp #CloudNative #Linux #GitHub #LearningInPublic**
+**#Terraform #AWS #DevOps #InfrastructureAsCode #IaC #CloudComputing #Automation #HashiCorp #GitHubActions #Trivy #CloudNative #LearningInPublic #Linux #GitHub #TerraWeekChallenge #TrainWithShubham**
