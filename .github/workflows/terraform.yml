@@ -1,4 +1,4 @@
-name: "TerraWeek Day 6 CI Quality Gate"
+name: "TerraWeek Day 6 CI Live Lifecycle Gate"
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  terraform_quality_pipeline:
-    name: "Validate, Scan, and Plan Operations"
+  terraform_live_pipeline:
+    name: "Scan, Initialize, Deploy, and Teardown"
     runs-on: ubuntu-latest
 
     defaults:
@@ -19,7 +19,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
-      # Task 3 & 5: Static Security Analysis gate using Trivy Configuration Scanner
+      # 1. Static Security Analysis Check
       - name: Run Trivy Security Vulnerability Scanner
         uses: aquasecurity/trivy-action@master
         with:
@@ -29,7 +29,8 @@ jobs:
           exit-code: '0' 
           scan-ref: 'Day-6'
 
-      # 🔐 SECURE AWS AUTHENTICATION STEP
+      # 2. 🔐 SECURE AWS AUTHENTICATION STEP
+      # Required for live S3 remote state tracking and provisioning resources
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -37,24 +38,36 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      # Setup HashiCorp Terraform CLI Context
+      # 3. Setup HashiCorp Terraform CLI Context
       - name: Setup HashiCorp Terraform CLI Context
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.11.0 
 
-      # Fix formatting dynamically inside the runner to satisfy format validation rules
+      # 4. Auto-Format Code Alignment (fmt)
       - name: Auto-Format Code Alignment (fmt)
         run: terraform fmt -recursive
 
-      # Initialize Configurations locally without triggering AWS backend lookups
+      # 5. Initialize Configurations (init)
+      # Connects directly to your live S3 remote state tracking bucket and DynamoDB locking infrastructure
       - name: Initialize Configurations (init)
-        run: terraform init -backend=false
+        run: terraform init
 
-      # Run Semantic Validation Check (validate)
+      # 6. Run Semantic Validation Check (validate)
       - name: Run Semantic Validation Check (validate)
         run: terraform validate
 
-      # Task 2: Running native testing evaluations
+      # 7. Execute Native Testing Assertions (test)
       - name: Execute Native Terraform Assertions (test)
         run: terraform test
+
+      # 8. 🚀 LIVE INFRASTRUCTURE CREATION (apply)
+      # This step spins up the active 2-tier architecture on your AWS account
+      - name: Terraform Apply (Create Infra)
+        run: terraform apply --auto-approve
+
+      # 9. 🧹 AUTOMATED RESOURCE TEARDOWN (destroy)
+      # This runs even if previous steps fail to ensure zero cloud cost leaks
+      - name: Terraform Destroy (Clean Up Infra)
+        if: always()
+        run: terraform destroy --auto-approve
