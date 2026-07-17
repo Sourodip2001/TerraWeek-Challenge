@@ -47,12 +47,9 @@ jobs:
       - name: Auto-Format Code Alignment (fmt)
         run: terraform fmt -recursive
 
-      # Initialize Configurations with a Local Backend Override
-      # Using -backend-config="in-memory" or overriding type forces Terraform to ignore the non-existent S3 bucket during CI tests
+      # Initialize Configurations locally without triggering AWS backend lookups
       - name: Initialize Configurations (init)
-        run: |
-          echo 'terraform { backend "local" {} }' > backend_override.tf
-          terraform init
+        run: terraform init -backend=false
 
       # Run Semantic Validation Check (validate)
       - name: Run Semantic Validation Check (validate)
