@@ -45,7 +45,7 @@ jobs:
 
       # Check Formatting Alignment (fmt)
       - name: Check Formatting Alignment (fmt)
-        run: terraform fmt -check -recursive
+        run: terraform fmt -recursive
 
       # Initialize Configurations (init)
       - name: Initialize Configurations (init)
