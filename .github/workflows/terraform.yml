@@ -43,13 +43,16 @@ jobs:
         with:
           terraform_version: 1.11.0 
 
-      # Check Formatting Alignment (fmt)
-      - name: Check Formatting Alignment (fmt)
+      # Fix formatting dynamically inside the runner to satisfy format validation rules
+      - name: Auto-Format Code Alignment (fmt)
         run: terraform fmt -recursive
 
-      # Initialize Configurations (init)
+      # Initialize Configurations with a Local Backend Override
+      # Using -backend-config="in-memory" or overriding type forces Terraform to ignore the non-existent S3 bucket during CI tests
       - name: Initialize Configurations (init)
-        run: terraform init
+        run: |
+          echo 'terraform { backend "local" {} }' > backend_override.tf
+          terraform init
 
       # Run Semantic Validation Check (validate)
       - name: Run Semantic Validation Check (validate)
